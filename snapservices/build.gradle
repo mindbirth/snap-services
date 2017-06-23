@@ -1,0 +1,87 @@
+apply plugin: 'com.android.library'
+
+version = snapProperties.version
+group = "com.snapround.android"
+description = "Snap Services Android Library "
+
+android {
+    compileSdkVersion 26
+    buildToolsVersion "25.0.3"
+
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 26
+
+        buildConfigField "String", "SNAP_SERVICES_VERSION", "\"${project.version}\""
+        proguardFiles 'consumer-proguard.pro'
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+        }
+
+        debug {
+            minifyEnabled false
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+}
+
+def supportVersion = "26.0.0-beta2"
+dependencies {
+    compile "com.android.support:support-annotations:${supportVersion}"
+    compile "com.android.support:appcompat-v7:${supportVersion}"
+}
+
+android.libraryVariants.all { variant ->
+    variant.outputs.each { output ->
+        if (output.outputFile.name.endsWith("aar")) {
+            output.outputFile = new File(output.outputFile.parent,
+                    "snapservices-${variant.name}-${version}.aar");
+        }
+    }
+
+    task "javadoc${variant.name.capitalize()}"(type: Javadoc) {
+        description = "Generates javadoc for build ${variant.name}"
+        title "Snap Services ${project.version}"
+        destinationDir = new File(destinationDir, variant.baseName)
+        source = files(variant.javaCompile.source)
+        doFirst {
+            classpath += variant.javaCompile.classpath
+            classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+        }
+        exclude '**/BuildConfig.java', '**/R.java'
+        failOnError false
+    }
+}
+
+ext {
+    bintrayRepo = 'android'
+    bintrayName = 'snapservices'
+
+    publishedGroupId = 'com.snapround.android'
+    libraryName = 'SnapServices'
+    artifact = 'snapservices'
+
+    libraryDescription = 'A drop-in replacement for Android services, fully compatible with Android O'
+
+    siteUrl = 'https://github.com/mindbirth/snap-services'
+    gitUrl = 'https://github.com/mindbirth/snap-services.git'
+
+    libraryVersion = "${version}"
+
+    developerId = 'mindbirth'
+    developerName = 'Pedro Pereira'
+    developerEmail = 'mrpedro17@gmail.com'
+
+    licenseName = 'The Apache Software License, Version 2.0'
+    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    allLicenses = ["Apache-2.0"]
+}
+
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'

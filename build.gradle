@@ -1,0 +1,35 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+    repositories {
+        jcenter()
+        maven {
+            url 'https://maven.google.com'
+        }
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:2.3.3'
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.4'
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.4.1'
+    }
+}
+
+allprojects {
+
+    ext {
+        snapProperties = new Properties()
+        snapProperties.load(new FileInputStream("snapservices.properties"))
+    }
+
+    repositories {
+        jcenter()
+        maven {
+            url "https://maven.google.com"
+        }
+    }
+}
+
+/*task continuousIntegration
+continuousIntegration.dependsOn(':sample:build', 'snapservices:assembleRelease',
+        'snapservices:javadocrelease')
+//'snapservices:testReleaseUnitTest',*/

@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/b_service_egg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Launch One Service of Type 'Egg'" />
+
+            <Button
+                android:id="@+id/b_service_fork"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/b_service_egg"
+                android:layout_marginTop="16dp"
+                android:text="Launch One Service of Type 'Fork'" />
+
+            <Button
+                android:id="@+id/b_service_mix"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/b_service_fork"
+                android:layout_marginTop="16dp"
+                android:text="Launch One Service of Type 'Mix'" />
+
+            <Button
+                android:id="@+id/b_refresh_thread_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/b_service_mix"
+                android:layout_marginTop="16dp"
+                android:text="Refresh thread count" />
+
+            <TextView
+                android:id="@+id/tv_thread_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="somehting"
+                android:layout_alignTop="@id/b_refresh_thread_count"
+                android:layout_toRightOf="@+id/b_refresh_thread_count"
+                android:layout_toEndOf="@+id/b_refresh_thread_count"
+                android:layout_marginTop="16dp" />
+
+            <Button
+                android:id="@+id/b_launch_snap_alarm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/b_refresh_thread_count"
+                android:layout_marginTop="16dp"
+                android:text="Launch SnapService via Alarm" />
+
+            <Button
+                android:id="@+id/b_launch_snap_alarm_on_separate_process"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/b_launch_snap_alarm"
+                android:layout_marginTop="16dp"
+                android:text="Launch SnapService via Alarm (separate process)" />
+
+            <RelativeLayout
+                android:id="@+id/rl_container_bind"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/b_launch_snap_alarm_on_separate_process"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="16dp">
+
+                <Button
+                    android:id="@+id/b_bind_service"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Bind Service" />
+
+                <Button
+                    android:id="@+id/b_execute_inside_bind_service"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:maxLines="2"
+                    android:text="Execute service"
+                    android:layout_toRightOf="@+id/b_bind_service"
+                    android:layout_toEndOf="@+id/b_bind_service" />
+
+                <Button
+                    android:id="@+id/b_unbind_service"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="2"
+                    android:text="Unbind service"
+                    android:layout_toRightOf="@+id/b_execute_inside_bind_service"
+                    android:layout_toEndOf="@+id/b_execute_inside_bind_service" />
+
+                <Button
+                    android:id="@+id/b_start_service"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Start Service"
+                    android:layout_below="@id/b_unbind_service"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_container_another_bind"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rl_container_bind"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="16dp">
+
+                <Button
+                    android:id="@+id/b_another_bind_service"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Bind another Service" />
+
+                <Button
+                    android:id="@+id/b_execute_inside_another_bind_service"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:maxLines="2"
+                    android:text="Execute another service"
+                    android:layout_toRightOf="@+id/b_another_bind_service"
+                    android:layout_toEndOf="@+id/b_another_bind_service" />
+
+                <Button
+                    android:id="@+id/b_unbind_another_bind_service"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="2"
+                    android:text="Unbind another service"
+                    android:layout_toRightOf="@+id/b_execute_inside_another_bind_service"
+                    android:layout_toEndOf="@+id/b_execute_inside_another_bind_service" />
+
+                <Button
+                    android:id="@+id/b_start_another_service"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Start Another Service"
+                    android:layout_below="@id/b_unbind_another_bind_service"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_foreground_services"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rl_container_another_bind"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:id="@+id/tv_foreground"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Start services in Foreground:"/>
+
+                <Button
+                    android:layout_below="@id/tv_foreground"
+                    android:id="@+id/b_start_egg_in_foreground"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Start Egg in Foreground" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/rl_other_process"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rl_foreground_services">
+
+                <TextView
+                    android:id="@+id/tv_another"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Start services in Foreground:"/>
+
+                <Button
+                    android:layout_below="@id/tv_another"
+                    android:id="@+id/b_start_egg_in_another_process"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Start Egg in Another process" />
+
+            </RelativeLayout>
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>
