@@ -55,18 +55,6 @@
     public <fields>;
 }
 
--keep public class com.android.snap.snapservices.notification.SnapNotification {
-    public <methods>;
-    protected <methods>;
-    public <fields>;
-}
-
--keep public class com.android.snap.snapservices.notification.SnapNotification$Builder {
-    public <methods>;
-    protected <methods>;
-    public <fields>;
-}
-
 -keep public class * extends android.app.Service
 -keep public class * extends android.content.ContextWrapper
 -keepattributes InnerClasses

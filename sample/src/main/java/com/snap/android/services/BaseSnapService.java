@@ -1,9 +1,12 @@
 package com.snap.android.services;
 
 import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
@@ -12,7 +15,6 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.android.snap.snapservices.SnapService;
-import com.android.snap.snapservices.notification.SnapNotification;
 import com.snap.android.R;
 
 import java.util.Random;
@@ -65,7 +67,28 @@ public abstract class BaseSnapService extends SnapService {
     public static Notification buildNotification(Context context, String contentTitle, String contentText,
                                                 String contentInfo, int smallIcon, String expandedText) {
 
-        final NotificationCompat.Builder builder = new SnapNotification.Builder(context)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+            // The id of the channel.
+            String id = "my_channel_01";
+            // The user-visible name of the channel.
+            CharSequence name = "channel_name";
+            // The user-visible description of the channel.
+            String description = "channel_description";
+            int importance = NotificationManager.IMPORTANCE_LOW;
+            NotificationChannel mChannel = new NotificationChannel(id, name, importance);
+            // Configure the notification channel.
+            mChannel.setDescription(description);
+            mChannel.enableLights(true);
+            // Sets the notification light color for notifications posted to this
+            // channel, if the device supports this feature.
+            mChannel.setLightColor(Color.RED);
+            mChannel.enableVibration(true);
+            mChannel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
+            mNotificationManager.createNotificationChannel(mChannel);
+        }
+
+        final NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "my_channel_01")
                 .setContentTitle(contentTitle)
                 .setContentText(contentText)
                 .setDefaults(Notification.DEFAULT_SOUND

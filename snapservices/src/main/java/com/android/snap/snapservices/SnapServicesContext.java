@@ -1,9 +1,11 @@
 package com.android.snap.snapservices;
 
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
+import com.android.snap.snapservices.alarms.SnapAlarmManager;
 import com.android.snap.snapservices.binder.SnapServiceConnection;
 import com.android.snap.snapservices.configuration.SnapConfigOptions;
 import com.android.snap.snapservices.logger.SnapLogger;
@@ -219,6 +221,40 @@ public class SnapServicesContext {
         }
 
         return SnapActivityManager.getDefault().verifyIfIsForkedProcess();
+    }
+
+    /**
+     * Generates a Pending Intent for a Snap Service.
+     *
+     * <p>If you don't pass a SnapService as the destination, this will still generate the Pending Intent
+     * for the actual component you specified on the Intent, and not be converted in any way.</p>
+     *
+     * <p>The request code for this PendingIntent will always be 0</p>
+     *
+     * <p><em>NOTE:</em>You should ALWAYS use this method when you want to generate a pending intent for a notification.</p>
+
+     * @param context The application context.
+     * @param intent The intent to be added into a pending intent.
+     * @return The PendingIntent already prepared to be delivered to a SnapService OR, to an Android Service
+     * if you passed that one instead.
+     */
+    public synchronized static PendingIntent generatePendingIntentForService(Context context, Intent intent) {
+
+        boolean isSnapService = false;
+        try {
+            //checks if this intent is meant to a SnapService.
+            isSnapService = SnapService.class.isAssignableFrom(Class.forName(intent.getComponent().getClassName()));
+        } catch (ClassNotFoundException ex) {
+            SnapLogger.e("Error checking if class inside intent extends from SnapService", ex);
+        }
+
+        if (isSnapService) {
+            Intent proxyIntent = SnapAlarmManager.convertSnapIntentToIntent(context, intent);
+            return PendingIntent.getService(context, 0, proxyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        }
+
+        //This is not a Snap Service. Still, generate the proper pending intent for it.
+        return PendingIntent.getService(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
 }

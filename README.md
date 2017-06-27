@@ -139,10 +139,26 @@ SnapServicesContext.bindService(bindIntent, mConnection);
 SnapServicesContext.unbindService(mConnection);
 ```` 
 
+* Send a notification with actions pointing to Snap Services:
+
+````
+Intent onDeleteIntent = new Intent(getApplicationContext(), ExampleService.class);
+onDeleteIntent.setAction("com.exampleservice.ON_DELETE");
+
+PendingIntent onDeletePendingIntent = SnapServicesContext.generatePendingIntentForService(getApplicationContext(), onDeleteIntent);
+````
+
+then add the action to the notification: 
+
+````
+Notification build = new NotificationCompat.Builder(getApplicationContext(), "my_notif_channel")
+    .setDeleteIntent(onDeletePendingIntent);
+````
+
 ## How to import
 
 * Make sure you have ````jcenter()```` configured on your project.
-* Add this line to yout dependencies: ````compile 'com.snapround.android:snapservices:1.0.0'````
+* Add this line to your dependencies: ````compile 'com.snapround.android:snapservices:1.1.0'````
 * Happy coding!
 
 ## Contributing
