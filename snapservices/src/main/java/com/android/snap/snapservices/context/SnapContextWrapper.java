@@ -1,6 +1,7 @@
 package com.android.snap.snapservices.context;
 
 import android.app.Notification;
+import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.ContextWrapper;
@@ -65,5 +66,23 @@ public class SnapContextWrapper extends ContextWrapper {
      */
     public ComponentName startForegroundService(Intent service) {
         return startService(service);
+    }
+
+    /**
+     * Generates a Pending Intent for a Snap Service.
+     *
+     * <p>If you don't pass a SnapService as the destination, this will still generate the Pending Intent
+     * for the actual component you specified on the Intent, and not be converted in any way.</p>
+     *
+     * <p>The request code for this PendingIntent will always be 0</p>
+     *
+     * <p><em>NOTE:</em>You should ALWAYS use this method when you want to generate a pending intent for a notification.</p>
+     * @param intent The intent to be added into a pending intent.
+     * @return The PendingIntent already prepared to be delivered to a SnapService OR, to an Android Service
+     * if you passed that one instead.
+     * @see SnapServicesContext#generatePendingIntentForService(Context, Intent)
+     */
+    public PendingIntent generatePendingIntentForService(Intent intent) {
+        return SnapServicesContext.generatePendingIntentForService(getApplicationContext(), intent);
     }
 }

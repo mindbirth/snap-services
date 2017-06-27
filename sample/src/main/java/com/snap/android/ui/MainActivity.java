@@ -2,11 +2,14 @@ package com.snap.android.ui;
 
 import android.app.AlarmManager;
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.annotation.Nullable;
@@ -21,14 +24,13 @@ import com.android.snap.snapservices.SnapServicesContext;
 import com.android.snap.snapservices.alarms.SnapAlarmManager;
 import com.android.snap.snapservices.binder.ISnapBinder;
 import com.android.snap.snapservices.binder.SnapServiceConnection;
-import com.android.snap.snapservices.notification.SnapNotification;
 import com.snap.android.R;
-import com.snap.android.services.alarms.AlarmReceiverService;
 import com.snap.android.services.AnotherBindedService;
 import com.snap.android.services.BindedService;
 import com.snap.android.services.EggService;
 import com.snap.android.services.ForkService;
 import com.snap.android.services.MixService;
+import com.snap.android.services.alarms.AlarmReceiverService;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -109,17 +111,42 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             Intent laterIntent = new Intent(getApplicationContext(), EggService.class);
             laterIntent.setAction("eggservice.action.DELETE_INTENT");
-            PendingIntent laterPendingIntent = PendingIntent.getService(getApplicationContext(),
-                    0, laterIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-            Notification build = new SnapNotification.Builder(getApplicationContext())
+            PendingIntent laterPendingIntent = SnapServicesContext
+                    .generatePendingIntentForService(getApplicationContext(), laterIntent);
+
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                // The id of the channel.
+                String id = "my_channel_01";
+                // The user-visible name of the channel.
+                CharSequence name = "channel_name";
+                // The user-visible description of the channel.
+                String description = "channel_description";
+                int importance = NotificationManager.IMPORTANCE_LOW;
+                NotificationChannel mChannel = new NotificationChannel(id, name, importance);
+                // Configure the notification channel.
+                mChannel.setDescription(description);
+                mChannel.enableLights(true);
+                // Sets the notification light color for notifications posted to this
+                // channel, if the device supports this feature.
+                mChannel.setLightColor(Color.RED);
+                mChannel.enableVibration(true);
+                mChannel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
+                mNotificationManager.createNotificationChannel(mChannel);
+            }
+
+            Notification build = new NotificationCompat.Builder(getApplicationContext(), "my_channel_01")
                     //.addAction(R.drawable.ic_launcher, "NOW!", laterPendingIntent)
                     .setDeleteIntent(laterPendingIntent)
                     .setSmallIcon(R.drawable.ic_launcher)
                     .setAutoCancel(true)
                     .setStyle(new NotificationCompat.BigTextStyle().bigText("super expanded text"))
                     .build();
-            final NotificationManager notificationManager = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
+
+            final NotificationManager notificationManager = (NotificationManager) getApplicationContext()
+                    .getSystemService(Context.NOTIFICATION_SERVICE);
             notificationManager.notify(123455, build);
             return;
         }
