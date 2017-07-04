@@ -59,6 +59,8 @@ android.libraryVariants.all { variant ->
     }
 }
 
+//to upload to bintray, use ./gradlew bintrayUpload
+
 ext {
     bintrayRepo = 'android'
     bintrayName = 'snapservices'

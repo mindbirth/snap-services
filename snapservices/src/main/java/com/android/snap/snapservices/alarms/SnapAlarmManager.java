@@ -71,7 +71,7 @@ public class SnapAlarmManager {
     public static void setAlarmOnSeparateProcess(Context context, @AlarmType int alarmType, Intent serviceIntent,
                                 int requestCode, long interval) {
         Intent realIntent = convertSnapIntentToIntent(context, serviceIntent);
-        realIntent.setClass(context, SnapForkedProxyService.class);
+        realIntent.setClass(context, SnapForkedProxyReceiver.class);
         internalSetAlarm(context, alarmType, realIntent, requestCode, interval);
     }
 
@@ -105,7 +105,7 @@ public class SnapAlarmManager {
      */
     public static boolean isAlarmSetOnSeparateProcess(Context context, Intent serviceIntent, int requestCode) {
         Intent realIntent = convertSnapIntentToIntent(context, serviceIntent);
-        realIntent.setClass(context, SnapForkedProxyService.class);
+        realIntent.setClass(context, SnapForkedProxyReceiver.class);
         return internalIsAlarmSet(context, realIntent, requestCode);
     }
 
@@ -142,13 +142,13 @@ public class SnapAlarmManager {
         }
 
         Intent realIntent = convertSnapIntentToIntent(context, serviceIntent);
-        realIntent.setClass(context, SnapForkedProxyService.class);
+        realIntent.setClass(context, SnapForkedProxyReceiver.class);
         internalCancelAlarm(context, realIntent, requestCode);
     }
 
     private static void internalSetAlarm(Context context, @AlarmType int alarmType, Intent serviceIntent,
                                          int requestCode, long interval) {
-        PendingIntent s = PendingIntent.getService(context, requestCode, serviceIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent s = PendingIntent.getBroadcast(context, requestCode, serviceIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         alarmManager.set(alarmType, interval, s);
     }
@@ -162,7 +162,7 @@ public class SnapAlarmManager {
      * @see PendingIntent#FLAG_NO_CREATE
      */
     private static boolean internalIsAlarmSet(Context context, Intent serviceIntent, int requestCode) {
-        return PendingIntent.getService(context, requestCode,
+        return PendingIntent.getBroadcast(context, requestCode,
                 serviceIntent, PendingIntent.FLAG_NO_CREATE) != null;
     }
 
@@ -174,7 +174,7 @@ public class SnapAlarmManager {
      * @param requestCode The request code set when the alarm was set.
      */
     private static void internalCancelAlarm(Context context, Intent serviceIntent, int requestCode) {
-        PendingIntent serviceScheduled = PendingIntent.getService(context,
+        PendingIntent serviceScheduled = PendingIntent.getBroadcast(context,
                 requestCode, serviceIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         alarmManager.cancel(serviceScheduled);
@@ -188,9 +188,9 @@ public class SnapAlarmManager {
      * @return The converted intent.
      */
     public static Intent convertSnapIntentToIntent(Context context, Intent intent) {
-        Intent internalServiceIntent = new Intent(context, SnapProxyService.class);
+        Intent internalServiceIntent = new Intent(context, SnapProxyReceiver.class);
         internalServiceIntent.setAction(intent.getAction());
-        internalServiceIntent.putExtra(SnapProxyService.EXTRA_SNAP_INTENT, intent);
+        internalServiceIntent.putExtra(SnapProxyReceiver.EXTRA_SNAP_INTENT, intent);
         return internalServiceIntent;
     }
 
@@ -202,6 +202,6 @@ public class SnapAlarmManager {
     static Intent convertIntentToSnapIntent(Intent intent) {
         if (intent == null) return null;
 
-        return intent.getParcelableExtra(SnapProxyService.EXTRA_SNAP_INTENT);
+        return intent.getParcelableExtra(SnapProxyReceiver.EXTRA_SNAP_INTENT);
     }
 }

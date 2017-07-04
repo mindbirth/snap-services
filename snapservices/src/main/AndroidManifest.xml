@@ -2,14 +2,13 @@
     package="com.android.snap.snapservices">
 
     <application>
-        <service android:name=".alarms.SnapProxyService" />
-
         <service android:name=".foreground.SnapForegroundService1" />
         <service android:name=".foreground.SnapForegroundService2" />
         <service android:name=".foreground.SnapForegroundService3" />
         <service android:name=".foreground.SnapForegroundService4" />
 
-        <service android:name=".alarms.SnapForkedProxyService"
+        <receiver android:name=".alarms.SnapProxyReceiver" />
+        <receiver android:name=".alarms.SnapForkedProxyReceiver"
             android:process=":snap_service_fork"/>
     </application>
 
