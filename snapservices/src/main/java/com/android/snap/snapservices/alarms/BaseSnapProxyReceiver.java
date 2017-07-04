@@ -1,8 +1,8 @@
 package com.android.snap.snapservices.alarms;
 
-import android.app.IntentService;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.Nullable;
 
 import com.android.snap.snapservices.logger.SnapLogger;
 
@@ -10,20 +10,12 @@ import com.android.snap.snapservices.logger.SnapLogger;
  * Proxy class that will receive all alarms set and deliver them to the
  * correct Snap Service recipient.
  */
-public abstract class BaseSnapProxyService extends IntentService {
+public abstract class BaseSnapProxyReceiver extends BroadcastReceiver {
 
     public static final String EXTRA_SNAP_INTENT = "com.android.snap.extra.SNAP_SERVICE";
-    /**
-     * Creates an IntentService.  Invoked by your subclass's constructor.
-     *
-     * @param name Used to name the worker thread, important only for debugging.
-     */
-    public BaseSnapProxyService(String name) {
-        super(name);
-    }
 
     @Override
-    protected void onHandleIntent(@Nullable Intent intent) {
+    public void onReceive(Context context, Intent intent) {
         if (intent == null) return;
         SnapLogger.v("Received proxy request for intent: " + intent);
         SnapLogger.d("Forwarding as snap Service.");

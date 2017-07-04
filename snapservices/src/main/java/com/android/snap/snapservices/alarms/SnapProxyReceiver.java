@@ -8,13 +8,7 @@ import com.android.snap.snapservices.SnapServicesContext;
  * Proxy class that will receive all proxy request on the main process and deliver them to the
  * correct Snap Service recipient.
  */
-public class SnapProxyService extends BaseSnapProxyService {
-    /**
-     * Creates an IntentService. Invoked by your subclass's constructor.
-     */
-    public SnapProxyService() {
-        super("SnapProxyService");
-    }
+public class SnapProxyReceiver extends BaseSnapProxyReceiver {
 
     @Override
     protected void startSnapService(Intent intent) {

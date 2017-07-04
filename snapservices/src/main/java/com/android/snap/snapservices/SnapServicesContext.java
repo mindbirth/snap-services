@@ -250,7 +250,7 @@ public class SnapServicesContext {
 
         if (isSnapService) {
             Intent proxyIntent = SnapAlarmManager.convertSnapIntentToIntent(context, intent);
-            return PendingIntent.getService(context, 0, proxyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            return PendingIntent.getBroadcast(context, 0, proxyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         }
 
         //This is not a Snap Service. Still, generate the proper pending intent for it.
