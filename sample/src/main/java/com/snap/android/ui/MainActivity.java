@@ -113,7 +113,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             laterIntent.setAction("eggservice.action.DELETE_INTENT");
 
             PendingIntent laterPendingIntent = SnapServicesContext
-                    .generatePendingIntentForService(getApplicationContext(), laterIntent);
+                    .generatePendingIntentForService(getApplicationContext(), laterIntent, 1);
 
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
