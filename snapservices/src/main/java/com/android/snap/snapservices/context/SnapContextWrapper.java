@@ -80,9 +80,9 @@ public class SnapContextWrapper extends ContextWrapper {
      * @param intent The intent to be added into a pending intent.
      * @return The PendingIntent already prepared to be delivered to a SnapService OR, to an Android Service
      * if you passed that one instead.
-     * @see SnapServicesContext#generatePendingIntentForService(Context, Intent)
+     * @see SnapServicesContext#generatePendingIntentForService(Context, Intent, int)
      */
-    public PendingIntent generatePendingIntentForService(Intent intent) {
-        return SnapServicesContext.generatePendingIntentForService(getApplicationContext(), intent);
+    public PendingIntent generatePendingIntentForService(Intent intent, int requestCode) {
+        return SnapServicesContext.generatePendingIntentForService(getApplicationContext(), intent, requestCode);
     }
 }
