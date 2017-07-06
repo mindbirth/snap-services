@@ -145,7 +145,7 @@ SnapServicesContext.unbindService(mConnection);
 Intent onDeleteIntent = new Intent(getApplicationContext(), ExampleService.class);
 onDeleteIntent.setAction("com.exampleservice.ON_DELETE");
 
-PendingIntent onDeletePendingIntent = SnapServicesContext.generatePendingIntentForService(getApplicationContext(), onDeleteIntent);
+PendingIntent onDeletePendingIntent = SnapServicesContext.generatePendingIntentForService(getApplicationContext(), onDeleteIntent, 0);
 ````
 
 then add the action to the notification: 
