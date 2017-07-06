@@ -235,10 +235,11 @@ public class SnapServicesContext {
 
      * @param context The application context.
      * @param intent The intent to be added into a pending intent.
+     * @param requestCode The private request code of the sender
      * @return The PendingIntent already prepared to be delivered to a SnapService OR, to an Android Service
      * if you passed that one instead.
      */
-    public synchronized static PendingIntent generatePendingIntentForService(Context context, Intent intent) {
+    public synchronized static PendingIntent generatePendingIntentForService(Context context, Intent intent, int requestCode) {
 
         boolean isSnapService = false;
         try {
@@ -250,11 +251,11 @@ public class SnapServicesContext {
 
         if (isSnapService) {
             Intent proxyIntent = SnapAlarmManager.convertSnapIntentToIntent(context, intent);
-            return PendingIntent.getBroadcast(context, 0, proxyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            return PendingIntent.getBroadcast(context, requestCode, proxyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         }
 
         //This is not a Snap Service. Still, generate the proper pending intent for it.
-        return PendingIntent.getService(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        return PendingIntent.getService(context, requestCode, intent, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
 }
