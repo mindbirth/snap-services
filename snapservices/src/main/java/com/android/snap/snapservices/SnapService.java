@@ -125,23 +125,14 @@ public abstract class SnapService extends SnapContextWrapper {
      * <p>Do <b>NOT</b> call this method directly.</p>
      */
     public void onDestroy() {
-
+        SnapLogger.v("onDestroy called [name=" + mName + "]");
+        stopForeground();
+        mServiceLooper.quit();
     }
 
     public ISnapBinder onBind(Intent intent) {
         SnapLogger.v("onBind called [name=" + mName + "]");
         return null;
-    }
-
-    /**
-     * Called by the system to completely remove the existing thread.
-     * This is called after {@link #onDestroy()}.
-     */
-    void quit() {
-        SnapLogger.v("quit called [name=" + mName + "]");
-        stopForeground();
-        mServiceLooper.quit();
-        mThread.quit();
     }
 
     /**

@@ -42,7 +42,7 @@ public class SnapConfigOptions {
 
     public static final class Builder {
 
-        private boolean killSeparateProcess = true;
+        private boolean killSeparateProcess = false;
         private int logLevel = SnapLogger.DISABLED;
 
         public Builder() {

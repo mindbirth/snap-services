@@ -78,6 +78,7 @@ public class SnapContextWrapper extends ContextWrapper {
      *
      * <p><em>NOTE:</em>You should ALWAYS use this method when you want to generate a pending intent for a notification.</p>
      * @param intent The intent to be added into a pending intent.
+     * @param requestCode The private request code of the sender.
      * @return The PendingIntent already prepared to be delivered to a SnapService OR, to an Android Service
      * if you passed that one instead.
      * @see SnapServicesContext#generatePendingIntentForService(Context, Intent, int)

@@ -400,16 +400,18 @@ class SnapActivityManager {
                 }
 
                 SnapService remove = mServiceWorkers.remove(serviceComponent);
+
+                if (remove == null) {
+                    SnapLogger.v("Service [component=" + serviceComponent + ";startId=" + startId + "] killed in the meantime.");
+                    return;
+                }
+
                 try {
                     remove.onDestroy();
                 } catch (Exception ex) {
                     SnapLogger.v("Error destroying service [component=" + serviceComponent + ";startId=" + startId + "]", ex);
                 }
-                try {
-                    remove.quit();
-                } catch (Exception ex) {
-                    SnapLogger.v("Error quitting service [component=" + serviceComponent + ";startId=" + startId + "]", ex);
-                }
+
                 SnapLogger.v("Service [component=" + serviceComponent + ";startId=" + startId + "] stopped!");
 
                 if (options.isKillSeparateProcessOnFinish() && verifyIfIsForkedProcess()) {

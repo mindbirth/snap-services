@@ -56,13 +56,9 @@
 }
 
 -keep public class * extends android.app.Service
+-keep public class * extends android.content.BroadcastReceiver
 -keep public class * extends android.content.ContextWrapper
 -keepattributes InnerClasses
-
--dontwarn android.support.v4.**
--dontwarn android.support.v7.**
--dontwarn android.support.v13.**
--dontwarn android.support.graphics.**
 
 #To completely remove the logging entries and the strings inside it
 #-assumenosideeffects class com.android.snap.snapservices.logger.SnapLogger {
