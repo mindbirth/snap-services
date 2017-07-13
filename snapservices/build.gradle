@@ -6,7 +6,7 @@ description = "Snap Services Android Library "
 
 android {
     compileSdkVersion 26
-    buildToolsVersion "25.0.3"
+    buildToolsVersion "26.0.0"
 
     defaultConfig {
         minSdkVersion 16
@@ -34,7 +34,6 @@ android {
 def supportVersion = "26.0.0-beta2"
 dependencies {
     compile "com.android.support:support-annotations:${supportVersion}"
-    compile "com.android.support:appcompat-v7:${supportVersion}"
 }
 
 android.libraryVariants.all { variant ->
