@@ -13,11 +13,11 @@ android {
         targetSdkVersion 26
 
         buildConfigField "String", "SNAP_SERVICES_VERSION", "\"${project.version}\""
-        proguardFiles 'consumer-proguard.pro'
+        //proguardFiles 'consumer-proguard.pro'
     }
     buildTypes {
         release {
-            minifyEnabled true
+            minifyEnabled false
         }
 
         debug {
