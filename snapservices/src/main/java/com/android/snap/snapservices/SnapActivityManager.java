@@ -26,6 +26,7 @@ import com.android.snap.snapservices.foreground.SnapForegroundService4;
 import com.android.snap.snapservices.logger.SnapLogger;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -497,7 +498,14 @@ class SnapActivityManager {
         int myPid = android.os.Process.myPid();
         ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
 
-        for (ActivityManager.RunningAppProcessInfo processInfo : manager.getRunningAppProcesses()) {
+        List<ActivityManager.RunningAppProcessInfo> runningAppProcesses = manager.getRunningAppProcesses();
+
+        if (runningAppProcesses == null) {
+            SnapLogger.v("Running App Processes list is null. Assume this is not the forked process. Hurrah Android!");
+            return false;
+        }
+
+        for (ActivityManager.RunningAppProcessInfo processInfo : runningAppProcesses) {
             if (processInfo.pid == myPid) {
                 String currentProcName = processInfo.processName;
                 if (!TextUtils.isEmpty(currentProcName)
