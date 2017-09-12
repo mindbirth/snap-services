@@ -158,7 +158,7 @@ Notification build = new NotificationCompat.Builder(getApplicationContext(), "my
 ## How to import
 
 * Make sure you have ````jcenter()```` configured on your project.
-* Add this line to your dependencies: ````compile 'com.snapround.android:snapservices:1.1.0'````
+* Add this line to your dependencies: ````compile 'com.snapround.android:snapservices:1.2.3'````
 * Happy coding!
 
 ## Contributing
