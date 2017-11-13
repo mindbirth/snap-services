@@ -14,7 +14,7 @@ Without this library you are very confined to what you can do. You can either:
 
 1. Abuse of the AlarmManager to launch Services to run immediately.
 2. Abuse of the JobScheduler to launch "jobs" to run immediately.
-3. Use bounded Services (if you do this at all)
+3. Use bounded Services (if this is feasible at all)
 4. Refactor your entire logic to start using specific components, with very limited abstraction and re-usability, in order to be able to run stuff in background whenever you need.
 5. Use foreground services.
 
@@ -26,7 +26,7 @@ But enough of my random musings.
 ### What can this offer me?
 
 Well, this library follows the Services API when possible, to give you the possibility of launching background services like you are used to.
-However, instead of using Android Services, we use our own SnapSerices. 
+However, instead of using Android Services, we use our own SnapServices. 
 
 All Android services should be replaced with SnapServices. Most features that you were used to have with Services, you still have with SnapServices.
 
@@ -39,7 +39,7 @@ Features:
 * notification actions support Snap Services. This will allow you to add PendingIntents to SnapServices on ANY notification you launch.
 * all SnapServices have a real Application Context, wrapped around inside SnapContextWrapper (which extends from ContextWrapper), to give the option to start another Snap Service without the need of accessing SnapServicesContext.
 
-This library also expands on features that existed in the past, but were limited:
+This library also extends on features that existed in the past, but were limited:
 * run ANY Snap Service on another process
 * schedule ANY Snap Service to run on another process
 
