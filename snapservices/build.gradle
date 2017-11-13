@@ -5,12 +5,14 @@ group = "com.snapround.android"
 description = "Snap Services Android Library "
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion "26.0.0"
+    compileSdkVersion 27
+    buildToolsVersion "27.0.1"
+
+    flavorDimensions "snapservices"
 
     defaultConfig {
         minSdkVersion 16
-        targetSdkVersion 26
+        targetSdkVersion 27
 
         buildConfigField "String", "SNAP_SERVICES_VERSION", "\"${project.version}\""
         //proguardFiles 'consumer-proguard.pro'
@@ -31,30 +33,14 @@ android {
     }
 }
 
-def supportVersion = "26.0.0-beta2"
+def supportVersion = "27.0.1"
 dependencies {
-    compile "com.android.support:support-annotations:${supportVersion}"
+    implementation "com.android.support:support-annotations:${supportVersion}"
 }
 
 android.libraryVariants.all { variant ->
-    variant.outputs.each { output ->
-        if (output.outputFile.name.endsWith("aar")) {
-            output.outputFile = new File(output.outputFile.parent,
-                    "snapservices-${variant.name}-${version}.aar");
-        }
-    }
-
-    task "javadoc${variant.name.capitalize()}"(type: Javadoc) {
-        description = "Generates javadoc for build ${variant.name}"
-        title "Snap Services ${project.version}"
-        destinationDir = new File(destinationDir, variant.baseName)
-        source = files(variant.javaCompile.source)
-        doFirst {
-            classpath += variant.javaCompile.classpath
-            classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-        }
-        exclude '**/BuildConfig.java', '**/R.java'
-        failOnError false
+    variant.outputs.all { output ->
+        outputFileName = "snapservices-${variant.name}-${version}.aar"
     }
 }
 

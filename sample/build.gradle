@@ -1,12 +1,16 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion "26.0.0"
+    compileSdkVersion 27
+    buildToolsVersion "27.0.1"
+
+    flavorDimensions "snapservices"
+    defaultPublishConfig "release"
+
     defaultConfig {
         applicationId "com.snap.android"
         minSdkVersion 16
-        targetSdkVersion 26
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -28,14 +32,14 @@ android {
     }
 }
 
-def supportVersion = "26.0.0-beta2"
+def supportVersion = "27.0.1"
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile "com.android.support:appcompat-v7:${supportVersion}"
-    compile "com.android.support:support-annotations:${supportVersion}"
-    testCompile 'junit:junit:4.12'
-    compile project(path: ':snapservices')
+    implementation "com.android.support:appcompat-v7:${supportVersion}"
+    implementation "com.android.support:support-annotations:${supportVersion}"
+    testImplementation 'junit:junit:4.12'
+    implementation project(path: ':snapservices')
 }
