@@ -5,14 +5,14 @@ group = "com.snapround.android"
 description = "Snap Services Android Library "
 
 android {
-    compileSdkVersion 27
-    buildToolsVersion "27.0.1"
+    compileSdkVersion 28
+    buildToolsVersion "28.0.3"
 
     flavorDimensions "snapservices"
 
     defaultConfig {
         minSdkVersion 16
-        targetSdkVersion 27
+        targetSdkVersion 28
 
         buildConfigField "String", "SNAP_SERVICES_VERSION", "\"${project.version}\""
         //proguardFiles 'consumer-proguard.pro'
@@ -33,7 +33,7 @@ android {
     }
 }
 
-def supportVersion = "27.0.1"
+def supportVersion = "28.0.0"
 dependencies {
     implementation "com.android.support:support-annotations:${supportVersion}"
 }
