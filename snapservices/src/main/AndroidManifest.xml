@@ -1,6 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.android.snap.snapservices">
 
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
     <application>
         <service android:name=".foreground.SnapForegroundService1" />
         <service android:name=".foreground.SnapForegroundService2" />
@@ -8,8 +10,9 @@
         <service android:name=".foreground.SnapForegroundService4" />
 
         <receiver android:name=".alarms.SnapProxyReceiver" />
-        <receiver android:name=".alarms.SnapForkedProxyReceiver"
-            android:process=":snap_service_fork"/>
+        <receiver
+            android:name=".alarms.SnapForkedProxyReceiver"
+            android:process=":snap_service_fork" />
     </application>
 
 </manifest>

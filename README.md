@@ -155,10 +155,14 @@ Notification build = new NotificationCompat.Builder(getApplicationContext(), "my
     .setDeleteIntent(onDeletePendingIntent);
 ````
 
+## Requirements
+* minSdkVersion: 16+
+* compileSdkVersion: 28
+
 ## How to import
 
 * Make sure you have ````jcenter()```` configured on your project.
-* Add this line to your dependencies: ````implementation 'com.snapround.android:snapservices:1.2.4'````
+* Add this line to your dependencies: ````implementation 'com.snapround.android:snapservices:1.2.5'````
 * Happy coding!
 
 ## Contributing
